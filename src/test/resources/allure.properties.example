@@ -1,0 +1,6 @@
+# allure.properties.example
+# Copy to `allure.properties` if you want to customize Allure output directory.
+
+allure.results.directory=target/allure-results
+allure.link.issue.pattern=https://github.com/issues/{}
+allure.link.tms.pattern=https://tms.example.com/{}

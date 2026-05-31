@@ -1,0 +1,17 @@
+# extent.properties.example
+# Copy this file to `extent.properties` and adjust paths/config as needed.
+
+# When true, each run produces a fresh file with a timestamp suffix so
+# previous reports are NOT overwritten.
+extent.report.timestamp        = true
+
+# Base path (file extension .html is appended automatically; the timestamp is inserted just before the extension when extent.report.timestamp=true).
+extent.report.path             = reports/extent/ExtentReport
+
+# Look and feel
+extent.report.theme            = DARK
+extent.report.document.title   = EMI Calculator Automation Report
+extent.report.report.name      = EMI Calculator - Hackathon Project
+
+# Timestamp format: yyyy.MM.dd_HH.mm.ss
+extent.report.timestamp.format = yyyy.MM.dd_HH.mm.ss

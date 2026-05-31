@@ -1,0 +1,75 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.backup
+release.properties
+dependency-reduced-pom.xml
+.flattened-pom.xml
+**/.m2/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.class
+.classpath
+.project
+.settings/
+.apt_generated
+.factorypath
+*.swp
+*.swo
+
+# Selenium
+test-output/
+screenshots/
+downloads/
+output/
+logs/
+reports/
+extent-reports/
+allure-results/
+allure-report/
+
+# Cucumber
+cucumber-html-reports/
+target/test-classes/
+cucumber-reports/
+
+# Dependencies
+.m2/
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.swp
+*.swo
+*.tmp~
+.~*
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+*.zip
+
+# Environment
+.env
+.env.local
+
+# Properties files
+*.properties

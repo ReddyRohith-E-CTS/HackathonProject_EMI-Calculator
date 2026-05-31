@@ -1,0 +1,28 @@
+# config.properties.example
+# Copy this file to `config.properties` and update values for your environment.
+
+# --- Target site URLs (constants) -----------------------------------
+base.url                = https://emicalculator.net/
+home.loan.url           = https://emicalculator.net/home-loan-emi-calculator/
+loan.calculator.url     = https://emicalculator.net/loan-calculator/
+personal.loan.url       = https://emicalculator.net/personal-loan-emi-calculator/
+
+# --- Browser ---------------------------------------------------------
+browser                 = chrome
+headless                = false
+
+# --- Wait timeouts (seconds) ----------------------------------------
+implicit.wait.seconds            = 5
+explicit.wait.seconds            = 20
+explicit.page.load.timeout.seconds = 45
+
+# Per-TC inputs (loan amount, rate, tenure, ...) in "src/test/resources/testdata/TestData.xlsx".
+
+# --- Output paths (relative to project root) -----------------------
+output.dir              = output
+screenshot.dir          = screenshots
+excel.home.loan.file    = output/HomeLoan_YearlySchedule.xlsx
+excel.car.loan.file     = output/CarLoan_EMI_Summary.xlsx
+
+# --- Assertion tolerance for EMI rounding (rupees) ------------------
+emi.tolerance           = 2
