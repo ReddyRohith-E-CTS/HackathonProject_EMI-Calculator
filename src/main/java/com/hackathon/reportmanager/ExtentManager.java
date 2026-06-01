@@ -30,7 +30,7 @@ public final class ExtentManager {
         String stampFmt  = p.getProperty("extent.report.timestamp.format", "yyyyMMdd_HHmmss");
         String theme     = p.getProperty("extent.report.theme", "DARK");
         String docTitle  = p.getProperty("extent.report.document.title", "EMI Calculator Automation Report");
-        String repName   = p.getProperty("extent.report.report.name", "EMI Calculator - INTQEA26QE003 Hackathon");
+        String repName   = p.getProperty("extent.report.report.name", "EMI Calculator Hackathon Project");
 
         REPORT_PATH = stamped
                 ? basePath + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(stampFmt)) + ".html"
@@ -43,7 +43,7 @@ public final class ExtentManager {
         spark.config().setReportName(repName);
         spark.config().setTimeStampFormat("yyyy-MM-dd HH:mm:ss");
         extent.attachReporter(spark);
-        extent.setSystemInfo("Project", "EMI Calculator Hackathon - INTQEA26QE003");
+        extent.setSystemInfo("Project", "EMI Calculator Hackathon Project");
         extent.setSystemInfo("Site",    "emicalculator.net");
         extent.setSystemInfo("OS",      System.getProperty("os.name"));
         extent.setSystemInfo("Java",    System.getProperty("java.version"));
