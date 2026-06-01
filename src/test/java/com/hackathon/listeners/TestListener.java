@@ -1,6 +1,5 @@
 package com.hackathon.listeners;
 
-import com.hackathon.reports.ExtentManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ISuite;
@@ -8,6 +7,8 @@ import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+
+import com.hackathon.reportmanager.ExtentManager;
 
 import java.io.File;
 

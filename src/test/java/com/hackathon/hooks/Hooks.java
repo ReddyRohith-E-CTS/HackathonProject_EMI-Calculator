@@ -3,7 +3,7 @@ package com.hackathon.hooks;
 import com.aventstack.extentreports.Status;
 import com.hackathon.base.BaseClass;
 import com.hackathon.context.ScenarioContext;
-import com.hackathon.reports.ExtentManager;
+import com.hackathon.reportmanager.ExtentManager;
 import com.hackathon.utils.ScreenshotUtils;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
