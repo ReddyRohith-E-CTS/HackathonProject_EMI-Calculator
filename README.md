@@ -239,7 +239,7 @@ HackathonProject_EMI-Calculator/
 | `src/main/java/com/hackathon/base/`            | WebDriver initialization, lifecycle, ThreadLocal management    |
 | `src/main/java/com/hackathon/config/`          | Properties loading, centralized configuration                  |
 | `src/main/java/com/hackathon/pages/`           | Page Object Model - UI element locators & page actions         |
-| `src/main/java/com/hackathon/reportmanager/`         | Thread-safe Extent report driver                               |
+| `src/main/java/com/hackathon/reportmanager/`   | Thread-safe Extent report driver                               |
 | `src/main/java/com/hackathon/utils/`           | EMI math, Excel I/O, screenshots, test data                    |
 | `src/test/java/com/hackathon/context/`         | Scenario-scoped shared state & soft assertions (PicoContainer) |
 | `src/test/java/com/hackathon/hooks/`           | Cucumber @Before / @After lifecycle hooks                      |

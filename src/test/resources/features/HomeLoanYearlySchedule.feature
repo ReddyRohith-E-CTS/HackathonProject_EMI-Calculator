@@ -1,5 +1,5 @@
 @HomeLoan @Regression
-Feature: Home Loan EMI Calculator – year-on-year schedule extract (Problem Statement 2)
+Feature: Home Loan EMI Calculator - year-on-year schedule extract (Problem Statement 2)
   Inputs live in testdata/TestData.xlsx sheet "HomeLoan".
 
   @TC05

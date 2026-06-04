@@ -17,11 +17,15 @@ public class LoanCalculatorSteps {
     private final ScenarioContext ctx;
 
     // PicoContainer injects the shared ScenarioContext.
-    public LoanCalculatorSteps(ScenarioContext ctx) { this.ctx = ctx; }
+    public LoanCalculatorSteps(ScenarioContext ctx) {
+        this.ctx = ctx;
+    }
 
     // Opens the Loan Calculator page directly via its URL.
     @Given("the Loan Calculator page is open")
-    public void open_loan_calc() { ctx.loanCalculatorPage = new LoanCalculatorPage().openDirect(); }
+    public void open_loan_calc() {
+        ctx.loanCalculatorPage = new LoanCalculatorPage().openDirect();
+    }
 
     // Loads the row from TestData.xlsx sheet 'LoanCalculator' for this TC and caches it.
     @Given("I have loan calculator test data for {string}")
@@ -37,7 +41,7 @@ public class LoanCalculatorSteps {
         @SuppressWarnings("unchecked")
         Map<String, String> data = (Map<String, String>) ctx.get("testData");
         switch (data.get("SubTab")) {
-            case "EMI Calculator"         -> ctx.loanCalculatorPage.selectEmiCalculator();
+            case "EMI Calculator" -> ctx.loanCalculatorPage.selectEmiCalculator();
             case "Loan Amount Calculator" -> ctx.loanCalculatorPage.selectAmountCalculator();
             case "Loan Tenure Calculator" -> ctx.loanCalculatorPage.selectTenureCalculator();
             default -> throw new IllegalArgumentException("Unknown sub-tab: " + data.get("SubTab"));
@@ -69,8 +73,10 @@ public class LoanCalculatorSteps {
     // Flips tenure unit to Yr or Mo and re-reads the new scale signature.
     @And("I switch the tenure unit to {string}")
     public void switch_unit(String unit) {
-        if (unit.toLowerCase().startsWith("mo")) ctx.loanCalculatorPage.switchTenureToMonths();
-        else                                     ctx.loanCalculatorPage.switchTenureToYears();
+        if (unit.toLowerCase().startsWith("mo"))
+            ctx.loanCalculatorPage.switchTenureToMonths();
+        else
+            ctx.loanCalculatorPage.switchTenureToYears();
         ctx.tenureScaleSignatureAfter = ctx.loanCalculatorPage.tenureScaleSignature();
     }
 

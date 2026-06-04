@@ -18,9 +18,11 @@ public final class ScreenshotUtils {
 
     private static final DateTimeFormatter TS = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS");
 
-    private ScreenshotUtils() {}
+    private ScreenshotUtils() {
+    }
 
-    // Captures a PNG of the current window, saves it under <project>/screenshots/, returns the absolute path.
+    // Captures a PNG of the current window, saves it under <project>/screenshots/,
+    // returns the absolute path.
     public static String capture(String name) {
         try {
             File source = ((TakesScreenshot) BaseClass.getDriver()).getScreenshotAs(OutputType.FILE);

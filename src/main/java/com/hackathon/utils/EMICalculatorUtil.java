@@ -2,7 +2,8 @@ package com.hackathon.utils;
 
 public final class EMICalculatorUtil {
 
-    private EMICalculatorUtil() {}
+    private EMICalculatorUtil() {
+    }
 
     // Converts an annual percentage rate to the per-month decimal rate used in EMI math.
     public static double monthlyRate(double annualRatePercent) {
@@ -31,11 +32,14 @@ public final class EMICalculatorUtil {
         return emi(principal, annualRatePercent, months) * months - principal;
     }
 
-    // Strips rupee/comma formatting from a string and returns the rounded numeric value.
+    // Strips rupee/comma formatting from a string and returns the rounded numeric
+    // value.
     public static long parseIndianCurrency(String s) {
-        if (s == null) throw new IllegalArgumentException("Currency string is null");
+        if (s == null)
+            throw new IllegalArgumentException("Currency string is null");
         String cleaned = s.replaceAll("[^0-9.\\-]", "").trim();
-        if (cleaned.isEmpty()) throw new IllegalArgumentException("No numeric content in: " + s);
+        if (cleaned.isEmpty())
+            throw new IllegalArgumentException("No numeric content in: " + s);
         return Math.round(Double.parseDouble(cleaned));
     }
 }

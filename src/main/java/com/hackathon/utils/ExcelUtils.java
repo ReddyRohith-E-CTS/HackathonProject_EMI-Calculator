@@ -15,20 +15,22 @@ import java.util.List;
 
 public final class ExcelUtils {
 
-    private ExcelUtils() {}
+    private ExcelUtils() {
+    }
 
     // Writes a 2D string grid to an .xlsx file (row 0 is the bold header row).
     // synchronized: Chrome and Edge run TC04/TC06 in parallel and both write to the
     // same output file; the lock ensures only one thread writes at a time.
     public static synchronized void writeSheet(String filePath, String sheetName, List<List<String>> data) {
-        if (data == null || data.isEmpty()) throw new IllegalArgumentException("No data to write to " + filePath);
+        if (data == null || data.isEmpty())
+            throw new IllegalArgumentException("No data to write to " + filePath);
         File f = new File(filePath);
         File parent = f.getParentFile();
         if (parent != null && !parent.exists() && !parent.mkdirs())
             throw new IllegalStateException("Cannot create dir " + parent);
 
         try (XSSFWorkbook wb = new XSSFWorkbook();
-             FileOutputStream out = new FileOutputStream(f)) {
+                FileOutputStream out = new FileOutputStream(f)) {
 
             XSSFSheet sheet = wb.createSheet(sheetName);
             XSSFCellStyle headerStyle = wb.createCellStyle();
@@ -42,10 +44,12 @@ public final class ExcelUtils {
                 for (int c = 0; c < rowData.size(); c++) {
                     Cell cell = row.createCell(c);
                     cell.setCellValue(rowData.get(c));
-                    if (r == 0) cell.setCellStyle(headerStyle);
+                    if (r == 0)
+                        cell.setCellStyle(headerStyle);
                 }
             }
-            for (int c = 0; c < data.get(0).size(); c++) sheet.autoSizeColumn(c);
+            for (int c = 0; c < data.get(0).size(); c++)
+                sheet.autoSizeColumn(c);
             wb.write(out);
         } catch (IOException e) {
             throw new RuntimeException("Failed to write Excel " + filePath, e);

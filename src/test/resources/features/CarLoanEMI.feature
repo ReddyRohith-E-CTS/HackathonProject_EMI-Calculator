@@ -1,7 +1,7 @@
 @CarLoan @Smoke
 Feature: Car Loan EMI calculation (Problem Statement 1)
   Inputs and verification type for each TC live in testdata/TestData.xlsx
-  sheet "CarLoan" — feature files do not duplicate that data.
+  sheet "CarLoan" - feature files do not duplicate that data.
 
   Background:
     Given the EMI Calculator homepage is open

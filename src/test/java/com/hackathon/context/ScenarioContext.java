@@ -38,9 +38,13 @@ public class ScenarioContext {
     private final Map<String, Object> bag = new HashMap<>();
 
     // Stores an arbitrary value under key for later retrieval by other step defs.
-    public void put(String key, Object value) { bag.put(key, value); }
+    public void put(String key, Object value) {
+        bag.put(key, value);
+    }
 
     // Retrieves a value previously stored via put(); cast to the call-site type.
     @SuppressWarnings("unchecked")
-    public <T> T get(String key) { return (T) bag.get(key); }
+    public <T> T get(String key) {
+        return (T) bag.get(key);
+    }
 }

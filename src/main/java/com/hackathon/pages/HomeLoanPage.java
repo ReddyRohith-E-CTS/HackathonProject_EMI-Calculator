@@ -13,14 +13,20 @@ import java.util.List;
 // Provides navigation, data entry, and extraction of the yearly amortisation schedule.
 public class HomeLoanPage extends BasePage {
 
-    @FindBy(id = "menu-item-dropdown-2696") private WebElement loanCalcMenu;
-    @FindBy(linkText = "Home Loan EMI Calculator") private WebElement homeLoanMenuLink;
+    @FindBy(id = "menu-item-dropdown-2696")
+    private WebElement loanCalcMenu;
+    @FindBy(linkText = "Home Loan EMI Calculator")
+    private WebElement homeLoanMenuLink;
 
-    @FindAll({@FindBy(id = "homeloanamount"),   @FindBy(name = "loanamount")})   private WebElement loanAmount;
-    @FindAll({@FindBy(id = "homeloaninterest"), @FindBy(name = "loaninterest")}) private WebElement loanInterest;
-    @FindAll({@FindBy(id = "homeloanterm"),     @FindBy(name = "loanterm")})     private WebElement loanTenure;
+    @FindAll({ @FindBy(id = "homeloanamount"), @FindBy(name = "loanamount") })
+    private WebElement loanAmount;
+    @FindAll({ @FindBy(id = "homeloaninterest"), @FindBy(name = "loaninterest") })
+    private WebElement loanInterest;
+    @FindAll({ @FindBy(id = "homeloanterm"), @FindBy(name = "loanterm") })
+    private WebElement loanTenure;
 
-    @FindBy(css = "tr.yearlypaymentdetails") private List<WebElement> yearlyRows;
+    @FindBy(css = "tr.yearlypaymentdetails")
+    private List<WebElement> yearlyRows;
 
     // Opens the dedicated Home Loan calculator page via the top menu.
     public HomeLoanPage openViaMenu(HomePage homePage) {
@@ -50,7 +56,8 @@ public class HomeLoanPage extends BasePage {
     public List<List<String>> extractYearlySchedule() {
         scrollBy(0, 800);
         wait.until(d -> !yearlyRows.isEmpty());
-        if (yearlyRows.isEmpty()) throw new IllegalStateException("Yearly schedule table is empty");
+        if (yearlyRows.isEmpty())
+            throw new IllegalStateException("Yearly schedule table is empty");
 
         List<List<String>> grid = new ArrayList<>();
         grid.add(List.of("Year", "Principal", "Interest", "Total Payment", "Balance", "Loan Paid To Date"));
@@ -60,7 +67,8 @@ public class HomeLoanPage extends BasePage {
             List<String> cells = (List<String>) js(
                     "return Array.from(arguments[0].querySelectorAll('td')).map(td => td.innerText.trim());",
                     row);
-            if (cells.size() < 5) continue;
+            if (cells.size() < 5)
+                continue;
             grid.add(List.of(cells.get(0), cells.get(1), cells.get(2),
                     cells.size() > 3 ? cells.get(3) : "",
                     cells.size() > 4 ? cells.get(4) : "",

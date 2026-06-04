@@ -22,7 +22,9 @@ public class HomeLoanSteps {
     private final ScenarioContext ctx;
 
     // PicoContainer injects the shared ScenarioContext.
-    public HomeLoanSteps(ScenarioContext ctx) { this.ctx = ctx; }
+    public HomeLoanSteps(ScenarioContext ctx) {
+        this.ctx = ctx;
+    }
 
     // Loads the row from TestData.xlsx sheet 'HomeLoan' for this TC and caches it.
     @Given("I have home loan test data for {string}")
@@ -37,7 +39,8 @@ public class HomeLoanSteps {
     public void open_menu_from_data() {
         @SuppressWarnings("unchecked")
         Map<String, String> data = (Map<String, String>) ctx.get("testData");
-        if (ctx.homePage == null) ctx.homePage = new HomePage().open();
+        if (ctx.homePage == null)
+            ctx.homePage = new HomePage().open();
         String item = data.get("MenuItem");
         if ("Home Loan EMI Calculator".equalsIgnoreCase(item)) {
             ctx.homeLoanPage = new HomeLoanPage().openViaMenu(ctx.homePage);
@@ -55,7 +58,9 @@ public class HomeLoanSteps {
 
     // Opens the Home Loan calculator page directly via its URL.
     @Given("the Home Loan EMI Calculator page is open")
-    public void open_home_loan_page() { ctx.homeLoanPage = new HomeLoanPage().openDirect(); }
+    public void open_home_loan_page() {
+        ctx.homeLoanPage = new HomeLoanPage().openDirect();
+    }
 
     // Fills the form using LoanAmount/InterestRate/Tenure from the test data row.
     @When("I fill the home loan form with values from the test data")
@@ -67,7 +72,9 @@ public class HomeLoanSteps {
 
     // Extracts the year-on-year schedule grid into the scenario context.
     @And("I extract the year-on-year schedule")
-    public void extract_schedule() { ctx.extractedSchedule = ctx.homeLoanPage.extractYearlySchedule(); }
+    public void extract_schedule() {
+        ctx.extractedSchedule = ctx.homeLoanPage.extractYearlySchedule();
+    }
 
     // Soft-asserts the schedule has at least the MinRows defined in the test data.
     @Then("the schedule should have the minimum yearly rows defined in the test data")

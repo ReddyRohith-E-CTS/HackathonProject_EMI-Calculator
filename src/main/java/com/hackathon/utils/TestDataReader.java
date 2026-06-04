@@ -19,7 +19,8 @@ public final class TestDataReader {
     private static final String RESOURCE = "testdata/TestData.xlsx";
     private static final Map<String, Map<String, String>> CACHE = new ConcurrentHashMap<>();
 
-    private TestDataReader() {}
+    private TestDataReader() {
+    }
 
     // Loads (and caches) every row of the given sheet keyed by TestCaseID; returns the row for tcId.
     public static Map<String, String> get(String sheetName, String tcId) {
@@ -48,26 +49,31 @@ public final class TestDataReader {
     // Loads every data row of a sheet into the cache (key = sheet|tcId).
     private static void loadSheet(String sheetName) {
         try (InputStream is = TestDataReader.class.getClassLoader().getResourceAsStream(RESOURCE);
-             Workbook wb = new XSSFWorkbook(is)) {
+                Workbook wb = new XSSFWorkbook(is)) {
             Sheet sh = wb.getSheet(sheetName);
-            if (sh == null) throw new IllegalStateException("Sheet not found: " + sheetName);
+            if (sh == null)
+                throw new IllegalStateException("Sheet not found: " + sheetName);
             Row header = sh.getRow(0);
             DataFormatter fmt = new DataFormatter();
             for (int r = 1; r <= sh.getLastRowNum(); r++) {
                 Row row = sh.getRow(r);
-                if (row == null) continue;
+                if (row == null)
+                    continue;
                 Map<String, String> rowMap = new LinkedHashMap<>();
                 String tcId = null;
                 for (int c = 0; c < header.getLastCellNum(); c++) {
                     Cell hCell = header.getCell(c);
                     Cell vCell = row.getCell(c);
-                    if (hCell == null) continue;
+                    if (hCell == null)
+                        continue;
                     String col = fmt.formatCellValue(hCell).trim();
                     String val = vCell == null ? "" : fmt.formatCellValue(vCell).trim();
                     rowMap.put(col, val);
-                    if ("TestCaseID".equalsIgnoreCase(col)) tcId = val;
+                    if ("TestCaseID".equalsIgnoreCase(col))
+                        tcId = val;
                 }
-                if (tcId != null && !tcId.isEmpty()) CACHE.put(key(sheetName, tcId), rowMap);
+                if (tcId != null && !tcId.isEmpty())
+                    CACHE.put(key(sheetName, tcId), rowMap);
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to load " + RESOURCE + " sheet=" + sheetName, e);

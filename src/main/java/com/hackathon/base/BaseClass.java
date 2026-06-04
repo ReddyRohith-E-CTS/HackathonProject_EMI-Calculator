@@ -15,23 +15,22 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
-
 import java.time.Duration;
 
 // BaseClass owns the WebDriver lifecycle and the @BeforeClass/@AfterClass hooks.
 // ThreadLocal isolates each browser thread's driver when Chrome and Edge run in parallel.
 public abstract class BaseClass extends AbstractTestNGCucumberTests {
 
-    protected static final ThreadLocal<WebDriver> driver      = new ThreadLocal<>();
-    private   static final ThreadLocal<String>    browserName = new ThreadLocal<>();
-    // Serialises the setUpClass calls so the global cucumber.plugin property is set
-    // and the TestNGCucumberRunner is created atomically per browser, avoiding races.
-    private   static final Object                 SETUP_LOCK  = new Object();
+    protected static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final ThreadLocal<String> browserName = new ThreadLocal<>();
+    // Serialises the setUpClass calls so the global cucumber.plugin property is set and the TestNGCucumberRunner is created atomically per browser, avoiding races.
+    private static final Object SETUP_LOCK = new Object();
 
     // Returns the driver bound to the current thread; throws if not initialised.
     public static WebDriver getDriver() {
         WebDriver d = driver.get();
-        if (d == null) throw new IllegalStateException("Driver not initialised on " + Thread.currentThread().getName());
+        if (d == null)
+            throw new IllegalStateException("Driver not initialised on " + Thread.currentThread().getName());
         return d;
     }
 
@@ -41,15 +40,13 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
         return b != null ? b : "chrome";
     }
 
-    // Overrides parent setUpClass() to wire per-browser Cucumber report files before the
-    // TestNGCucumberRunner is created. A static lock serialises both threads so the global
-    // cucumber.plugin property is read by exactly the right runner and not overwritten mid-flight.
+    // Overrides parent setUpClass() to wire per-browser Cucumber report files before the TestNGCucumberRunner is created. A static lock serialises both threads so the global cucumber.plugin property is read by exactly the right runner and not overwritten mid-flight.
     @Override
     @BeforeClass(alwaysRun = true)
     public void setUpClass(ITestContext context) {
-        String browser  = param(context, "browser", "chrome").toLowerCase();
+        String browser = param(context, "browser", "chrome").toLowerCase();
         String testName = context.getCurrentXmlTest().getName()
-                .toLowerCase().replaceAll("[^a-z0-9]", "-");   // e.g. "chrome-tests"
+                .toLowerCase().replaceAll("[^a-z0-9]", "-"); // e.g. "chrome-tests"
         String htmlPath = "reports/cucumber/" + testName + "-cucumber.html";
         String jsonPath = "reports/cucumber/" + testName + "-cucumber.json";
 
@@ -57,7 +54,11 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
         synchronized (SETUP_LOCK) {
             System.setProperty("cucumber.plugin",
                     "html:" + htmlPath + ", json:" + jsonPath);
-            try { super.setUpClass(context); } catch (Exception e) { throw new RuntimeException(e); }
+            try {
+                super.setUpClass(context);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         browserName.set(browser);
     }
@@ -72,11 +73,12 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
     @BeforeClass(alwaysRun = true)
     @Parameters("browser")
     public void launchBrowser(@Optional("chrome") String browser) {
-        if (driver.get() != null) return;
+        if (driver.get() != null)
+            return;
         boolean headless = ConfigReader.get().getBoolean("headless");
         WebDriver d = switch (browser.toLowerCase()) {
-            case "chrome"  -> buildChrome(headless);
-            case "edge"    -> buildEdge(headless);
+            case "chrome" -> buildChrome(headless);
+            case "edge" -> buildEdge(headless);
             case "firefox" -> buildFirefox(headless);
             default -> throw new IllegalArgumentException("Unsupported browser: " + browser);
         };
@@ -91,8 +93,12 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
     @AfterClass(alwaysRun = true)
     public void closeBrowser() {
         WebDriver d = driver.get();
-        if (d == null) return;
-        try { d.quit(); } catch (Exception ignored) {}
+        if (d == null)
+            return;
+        try {
+            d.quit();
+        } catch (Exception ignored) {
+        }
         driver.remove();
         browserName.remove();
     }
@@ -102,7 +108,8 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
         ChromeOptions o = new ChromeOptions();
         o.addArguments("--remote-allow-origins=*", "--disable-notifications", "--disable-popup-blocking",
                 "--disable-blink-features=AutomationControlled");
-        if (headless) o.addArguments("--headless=new", "--window-size=1920,1080");
+        if (headless)
+            o.addArguments("--headless=new", "--window-size=1920,1080");
         return new ChromeDriver(o);
     }
 
@@ -110,14 +117,16 @@ public abstract class BaseClass extends AbstractTestNGCucumberTests {
     private static WebDriver buildEdge(boolean headless) {
         EdgeOptions o = new EdgeOptions();
         o.addArguments("--remote-allow-origins=*", "--disable-notifications", "--disable-popup-blocking");
-        if (headless) o.addArguments("--headless=new", "--window-size=1920,1080");
+        if (headless)
+            o.addArguments("--headless=new", "--window-size=1920,1080");
         return new EdgeDriver(o);
     }
 
     // Builds a configured FirefoxDriver (headless if requested).
     private static WebDriver buildFirefox(boolean headless) {
         FirefoxOptions o = new FirefoxOptions();
-        if (headless) o.addArguments("-headless");
+        if (headless)
+            o.addArguments("-headless");
         return new FirefoxDriver(o);
     }
 }

@@ -18,7 +18,9 @@ public class Hooks {
     private final ScenarioContext ctx;
 
     // PicoContainer injects a fresh ScenarioContext per scenario.
-    public Hooks(ScenarioContext ctx) { this.ctx = ctx; }
+    public Hooks(ScenarioContext ctx) {
+        this.ctx = ctx;
+    }
 
     // Opens an ExtentTest, logs the start banner and clears session cookies.
     @Before(order = 0)
@@ -29,18 +31,20 @@ public class Hooks {
                 String.format("[%s] %s %s", browser, tcId, scenario.getName()),
                 "Source: " + scenario.getUri());
         ExtentManager.logStep(Status.INFO, "Starting on <b>" + browser + "</b>");
-        try { BaseClass.getDriver().manage().deleteAllCookies(); }
-        catch (Exception ignored) {}
+        try {
+            BaseClass.getDriver().manage().deleteAllCookies();
+        } catch (Exception ignored) {
+        }
     }
 
     // Captures a screenshot, attaches it to Extent, then flushes soft asserts.
     @After(order = 1)
     public void afterScenario(Scenario scenario) {
         String browser = currentBrowser();
-        String tcId    = extractTcId(scenario);
+        String tcId = extractTcId(scenario);
         boolean softFailed = !ctx.softly.errorsCollected().isEmpty();
-        boolean failed     = scenario.isFailed() || softFailed;
-        String  status     = failed ? "FAILED" : "PASSED";
+        boolean failed = scenario.isFailed() || softFailed;
+        String status = failed ? "FAILED" : "PASSED";
 
         String safeName = stripTcPrefix(scenario.getName());
         String name = String.format("%s_%s_%s_%s",
@@ -49,10 +53,13 @@ public class Hooks {
 
         if (path != null) {
             String label = String.format("%s - %s on %s", tcId, status, browser);
-            if (failed) ExtentManager.attachFailureScreenshot(path, label);
-            else        ExtentManager.attachPassScreenshot(path, label);
+            if (failed)
+                ExtentManager.attachFailureScreenshot(path, label);
+            else
+                ExtentManager.attachPassScreenshot(path, label);
         }
-        if (!failed) ExtentManager.logStep(Status.PASS, "Scenario passed");
+        if (!failed)
+            ExtentManager.logStep(Status.PASS, "Scenario passed");
 
         try {
             ctx.softly.assertAll();
@@ -68,25 +75,29 @@ public class Hooks {
                 .findFirst()
                 .map(t -> t.substring(1))
                 .orElse(null);
-        if (fromTag != null) return fromTag;
+        if (fromTag != null)
+            return fromTag;
         String name = scenario.getName();
         if (name != null) {
             var m = java.util.regex.Pattern.compile("^(TC\\d+)").matcher(name);
-            if (m.find()) return m.group(1);
+            if (m.find())
+                return m.group(1);
         }
         return "TCXX";
     }
 
     // Reduces a scenario name to a filename-safe slug capped at 60 chars.
     private String sanitise(String s) {
-        if (s == null) return "scenario";
+        if (s == null)
+            return "scenario";
         String slug = s.replaceAll("[^a-zA-Z0-9]+", "_");
         return slug.length() > 60 ? slug.substring(0, 60) : slug;
     }
 
     // Drops a leading "TCxx - " or "TCxx_" so the filename does not duplicate the tag.
     private String stripTcPrefix(String name) {
-        if (name == null) return "";
+        if (name == null)
+            return "";
         return name.replaceFirst("^TC\\d+\\s*[-_:]?\\s*", "");
     }
 
@@ -98,7 +109,8 @@ public class Hooks {
                 String name = hc.getCapabilities().getBrowserName();
                 return (name == null || name.isBlank()) ? "unknown" : name.toLowerCase();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return "unknown";
     }
 }
